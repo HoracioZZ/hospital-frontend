@@ -34,18 +34,11 @@ btnCargar.addEventListener('click', async () => {
 
         // Iterar sobre los datos y crear las filas
 datos.forEach(item => {
-    // Imprimimos el objeto para que puedas verlo en la consola (F12)
-    console.log("Datos del objeto:", item);
-
     const fila = document.createElement('tr');
     
-    // BUSCADOR FLEXIBLE: Intenta leer el nombre en todas sus variantes
+    // Esta lógica busca todas las formas posibles en que puede llegar el nombre
     const codigo = item.codigo || item.Codigo || "S/C";
-    
-    // Busca 'nombre' (DTO), 'Nombre' (PascalCase) o 'nombre_especialidad' (Clase original)
     const nombre = item.nombre || item.Nombre || item.nombre_especialidad || "Sin Nombre";
-    
-    // Busca 'estado' o 'Estado'
     const estado = item.estado || item.Estado || "Activo";
     
     fila.innerHTML = `
