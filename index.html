@@ -49,7 +49,41 @@
             </div>
         </div>
     </div>
+<!-- ========================================== -->
+    <!-- MÓDULO GESTIÓN PACIENTES (API COMPAÑERO) -->
+    <!-- ========================================== -->
+    <div class="container mt-5 mb-5">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h3>Directorio de Pacientes</h3>
+                <p class="text-muted">Consumiendo datos desde el microservicio de Gestión Paciente (Nube)</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <button id="btnCargarPacientes" class="btn btn-info btn-lg text-white">Actualizar Pacientes</button>
+            </div>
+        </div>
 
+        <div class="card shadow-sm border-info">
+            <div class="card-body p-0">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-info">
+                        <tr>
+                            <th>Código</th>
+                            <th>Paciente (Nombre Completo)</th>
+                            <th>CI</th>
+                            <th>Teléfono</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPacientesCuerpo">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Haz clic en "Actualizar Pacientes" para cargar la información.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <!-- Tu archivo de JavaScript -->
     <script src="app.js"></script>
 </body>
