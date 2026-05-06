@@ -122,3 +122,37 @@ btnCargarPacientes.addEventListener('click', async () => {
         tablaPacientesCuerpo.innerHTML = `<tr><td colspan="5" class="text-center text-danger"><b>Error de Conexión:</b> No se pudo conectar con el microservicio de Pacientes. (Revisa la consola para más detalles)</td></tr>`;
     }
 });
+// --- Lógica para CREAR Especialidad ---
+const form = document.getElementById('formEspecialidad');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Evita que la página se recargue
+
+    // 1. Capturar datos del formulario
+    const nombre = document.getElementById('postNombre').value;
+    const codigo = document.getElementById('postCodigo').value;
+    const descripcion = document.getElementById('postDescripcion').value;
+    const requiere = document.getElementById('postReferencia').value;
+
+    // 2. Armar la URL según tu controlador: crear/{nombre}/{codigo}/{descripcion}/{requiereReferencia}
+    // Usamos encodeURIComponent para proteger espacios y caracteres especiales
+    const urlPost = `https://especialidades-medicas-api.onrender.com/api/Especialidades/crear/${encodeURIComponent(nombre)}/${encodeURIComponent(codigo)}/${encodeURIComponent(descripcion)}/${requiere}`;
+
+    try {
+        const respuesta = await fetch(urlPost, {
+            method: 'POST'
+        });
+
+        if (respuesta.ok) {
+            alert("✅ Especialidad guardada con éxito.");
+            form.reset(); // Limpiar formulario
+            btnCargar.click(); // Recargar la tabla automáticamente para ver la nueva
+        } else {
+            const errorTexto = await respuesta.text();
+            alert("❌ Error: " + errorTexto);
+        }
+    } catch (error) {
+        console.error("Error al enviar datos:", error);
+        alert("Hubo un fallo en la conexión con la nube.");
+    }
+});
