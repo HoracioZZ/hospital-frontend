@@ -30,6 +30,41 @@
         </div>
 
         <!-- Tabla -->
+        <div class="container mt-4">
+    <div class="card shadow border-primary">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">➕ Registrar Nueva Especialidad</h4>
+        </div>
+        <div class="card-body">
+            <form id="formEspecialidad">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">Código</label>
+                        <input type="text" id="postCodigo" class="form-control" placeholder="Ej: ESP-001" required>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label fw-bold">Nombre</label>
+                        <input type="text" id="postNombre" class="form-control" placeholder="Ej: Cardiología" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Referencia</label>
+                        <select id="postReferencia" class="form-select">
+                            <option value="false">No requiere</option>
+                            <option value="true">Sí requiere</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label fw-bold">Descripción</label>
+                        <textarea id="postDescripcion" class="form-control" rows="2" placeholder="Breve descripción de la especialidad..." required></textarea>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary btn-lg">💾 Guardar Especialidad</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
         <div class="card shadow-sm">
             <div class="card-body p-0">
                 <table class="table table-striped table-hover mb-0">
