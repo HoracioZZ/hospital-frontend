@@ -34,22 +34,30 @@ btnCargar.addEventListener('click', async () => {
 
         // Iterar sobre los datos y crear las filas
 datos.forEach(item => {
+    // Imprimimos el objeto para que puedas verlo en la consola (F12)
+    console.log("Datos del objeto:", item);
+
     const fila = document.createElement('tr');
     
-    // Esto busca la propiedad sin importar si empieza con mayúscula o minúscula
-    const codigo = item.codigo || item.Codigo;
-    const nombre = item.nombre || item.Nombre;
-    const estado = item.estado || item.Estado;
+    // BUSCADOR FLEXIBLE: Intenta leer el nombre en todas sus variantes
+    const codigo = item.codigo || item.Codigo || "S/C";
+    
+    // Busca 'nombre' (DTO), 'Nombre' (PascalCase) o 'nombre_especialidad' (Clase original)
+    const nombre = item.nombre || item.Nombre || item.nombre_especialidad || "Sin Nombre";
+    
+    // Busca 'estado' o 'Estado'
+    const estado = item.estado || item.Estado || "Activo";
     
     fila.innerHTML = `
-        <td class="fw-bold">${codigo || 'S/C'}</td>
-        <td>${nombre || 'Sin Nombre'}</td>
+        <td class="fw-bold">${codigo}</td>
+        <td>${nombre}</td>
         <td>
-            <span class="badge ${estado === 'Activo' ? 'bg-success' : 'bg-secondary'}">
-                ${estado || 'Desconocido'}
+            <span class="badge ${estado.toString().toLowerCase() === 'activo' ? 'bg-success' : 'bg-secondary'}">
+                ${estado}
             </span>
         </td>
     `;
+    
     tablaCuerpo.appendChild(fila);
 });
 
