@@ -60,3 +60,65 @@ datos.forEach(item => {
         tablaCuerpo.innerHTML = `<tr><td colspan="3" class="text-center text-danger"><b>Error:</b> No se pudo conectar con la API. Revisa la consola o tu servidor Render.</td></tr>`;
     }
 });
+// ==========================================
+// INTEGRACIÓN: GESTIÓN DE PACIENTES
+// ==========================================
+
+// 1. URL de la API de tu compañero
+const API_PACIENTES = 'https://gestionpacientes.onrender.com/api/pacientes/';
+
+// 2. Referencias al HTML
+const btnCargarPacientes = document.getElementById('btnCargarPacientes');
+const tablaPacientesCuerpo = document.getElementById('tablaPacientesCuerpo');
+
+// 3. Evento del botón
+btnCargarPacientes.addEventListener('click', async () => {
+    // Mensaje de carga
+    tablaPacientesCuerpo.innerHTML = `<tr><td colspan="5" class="text-center text-info fw-bold">Cargando datos desde Gestión Paciente... ⏳</td></tr>`;
+
+    try {
+        const respuesta = await fetch(API_PACIENTES);
+        
+        if (!respuesta.ok) {
+            throw new Error(`Error en el servidor de pacientes: ${respuesta.status}`);
+        }
+
+        const pacientes = await respuesta.json();
+        tablaPacientesCuerpo.innerHTML = '';
+
+        if (pacientes.length === 0) {
+            tablaPacientesCuerpo.innerHTML = `<tr><td colspan="5" class="text-center text-warning">No hay pacientes registrados.</td></tr>`;
+            return;
+        }
+
+        pacientes.forEach(p => {
+            const fila = document.createElement('tr');
+            
+            // Leemos los datos tal cual nos pasaste en el JSON
+            const codigo = p.codigo_paciente || "S/C";
+            // Unimos nombre y apellido
+            const nombreCompleto = `${p.nombre || ''} ${p.apellido || ''}`.trim() || "Sin Nombre";
+            const ci = p.ci || "S/CI";
+            const telefono = p.telefono || "Sin Tel.";
+            const estado = p.estado || "Activo";
+            
+            fila.innerHTML = `
+                <td class="fw-bold text-info">${codigo}</td>
+                <td>${nombreCompleto}</td>
+                <td>${ci}</td>
+                <td>${telefono}</td>
+                <td>
+                    <span class="badge ${estado.toLowerCase() === 'activo' ? 'bg-success' : 'bg-secondary'}">
+                        ${estado}
+                    </span>
+                </td>
+            `;
+            
+            tablaPacientesCuerpo.appendChild(fila);
+        });
+
+    } catch (error) {
+        console.error("Error al consumir API de Pacientes:", error);
+        tablaPacientesCuerpo.innerHTML = `<tr><td colspan="5" class="text-center text-danger"><b>Error de Conexión:</b> No se pudo conectar con el microservicio de Pacientes. (Revisa la consola para más detalles)</td></tr>`;
+    }
+});
